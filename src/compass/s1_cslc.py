@@ -4,8 +4,10 @@ from compass.utils.runconfig import RunConfig
 from compass.utils.yaml_argparse import YamlArgparse
 
 
-def main(run_config_path, grid_type):
-    if grid_type == 'radar':
+def main():
+    parser = YamlArgparse(add_grid_type=True)
+
+    if parser.args.grid_type == 'radar':
         # CSLC workflow in radar coordinates
         # get a runconfig dict from command line args
         cfg = RunConfig.load_from_yaml(parser.run_config_path, 's1_cslc_radar')
@@ -19,7 +21,7 @@ def main(run_config_path, grid_type):
             s1_geo2rdr.run(cfg)
             s1_resample.run(cfg)
 
-    elif proc_steps_geo.issubset(proc_steps):
+    elif parser.args.grid_type == 'geo':
         # CSLC workflow in geo-coordinates
         # get a runconfig dict from command line argumens
         cfg = GeoRunConfig.load_from_yaml(parser.run_config_path, 's1_cslc_geo')
@@ -30,11 +32,4 @@ def main(run_config_path, grid_type):
 
 if __name__ == "__main__":
     '''run s1_cslc from command line'''
-    # load command line args
-    parser = YamlArgparse()
-    parser.parser.add_argument('--grid-type', dest='grid_type', type=str,
-                               choices=['geo', 'radar'], default='geo',
-                               help='Grid type to perform CSLC processing in\n')
-    parser.parse()
-
-    main(parser.run_config_path, parser.args.grid_type)
+    main()
