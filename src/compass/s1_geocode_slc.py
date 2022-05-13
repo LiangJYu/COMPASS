@@ -118,6 +118,7 @@ if __name__ == "__main__":
     '''Run geocode cslc workflow from command line'''
     # load arguments from command line
     parser = YamlArgparse()
+    parser.parse()
 
     # Get a runconfig dict from command line argumens
     cfg = GeoRunConfig.load_from_yaml(parser.run_config_path, 's1_cslc_geo')

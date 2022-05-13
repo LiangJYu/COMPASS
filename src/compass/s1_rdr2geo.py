@@ -119,6 +119,7 @@ if __name__ == "__main__":
     '''run rdr2geo from command line'''
     # load command line args
     parser = YamlArgparse()
+    parser.parse()
 
     # get a runconfig dict from command line args
     cfg = RunConfig.load_from_yaml(parser.args.run_config_path, 's1_rdr2geo')
