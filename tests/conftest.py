@@ -32,19 +32,20 @@ def ionex_params(download_data=True):
     os.makedirs(test_params.tec_dir, exist_ok=True)
 
     # Generate the TEC filename
-    test_params.tec_file = iono.get_ionex_filename(test_params.date_str,
-                                          tec_dir=test_params.tec_dir,
-                                          sol_code=test_params.sol_code)
+    tec_file = iono.get_ionex_filename(test_params.date_str,
+                                       tec_dir=test_params.tec_dir,
+                                       sol_code=test_params.sol_code)
 
     # TODO figure out how to toggle download
-
     # If prep_mode=True, download data
     if download_data:
-        if not os.path.isfile(test_params.tec_file):
+        if not os.path.isfile(tec_file):
             print(f'Download IONEX file at {test_params.date_str} from '
                   f'{test_params.sol_code} to {test_params.tec_dir}')
-            test_params.tec_file = iono.download_ionex(test_params.date_str,
-                                                       test_params.tec_dir,
-                                                       sol_code=test_params.sol_code)
+            tec_file = iono.download_ionex(test_params.date_str,
+                                           test_params.tec_dir,
+                                           sol_code=test_params.sol_code)
+
+    test_params.tec_file = tec_file
 
     return test_params
