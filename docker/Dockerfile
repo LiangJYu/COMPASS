@@ -8,9 +8,8 @@ RUN yum -y update &&\
     yum -y install curl &&\
     adduser compass_user
 
-RUN mkdir -p /home/compass_user/OPERA
-
-RUN chown -R compass_user:compass_user /home/compass_user/OPERA &&\
+RUN mkdir -p /home/compass_user/OPERA &&\
+    chown -R compass_user:compass_user /home/compass_user/OPERA &&\
     chmod -R 755 /home/compass_user
 
 USER compass_user
