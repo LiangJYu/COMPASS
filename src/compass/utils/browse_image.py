@@ -173,7 +173,7 @@ def _save_to_disk_as_greyscale(image, fname):
 
 
 def make_browse_image(filename, path_h5, bursts, complex_to_real='amplitude', percent_low=0.0,
-                      percent_high=100.0, gamma=1.0, equalize=False):
+                      percent_high=100.0, gamma=1.0, equalize=False, max_dim=2048):
     '''
     Make browse image(s) for geocoded CSLC raster(s)
 
@@ -214,7 +214,8 @@ def make_browse_image(filename, path_h5, bursts, complex_to_real='amplitude', pe
 
             # compute browse shape
             full_shape = grid_group[pol].shape
-            browse_h, browse_w = _scale_to_max_pixel_dimension(full_shape)
+            browse_h, browse_w = _scale_to_max_pixel_dimension(full_shape,
+                                                               max_dim)
 
             # create in memory GDAL raster for GSLC as real value array
             src_raster = f'{derived_netcdf_to_grid}/{pol}'
@@ -248,10 +249,9 @@ def make_browse_image(filename, path_h5, bursts, complex_to_real='amplitude', pe
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Create browse images for the geocode cslc workflow from command line',
                                      formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument('run-config-path', nargs='?',
+    parser.add_argument('run_config_path', nargs='?',
                         default=None, help='Path to run config file')
-    parser.add_argument('-o', '--out-fname',
-                        help='Path to output png file')
+    parser.add_argument('out_fname', help='Path to output png file')
     parser.add_argument('-c', '--complex-to-real',
                         choices=['amplitude', 'intensity', 'logamplitude'],
                         default='amplitude', help='Method to convert complex data to real')
@@ -263,6 +263,8 @@ if __name__ == "__main__":
                         help='Exponent value used for gamma correction')
     parser.add_argument('-e', '--equalize', action='store_true',
                         help='Enable histogram equalization')
+    parser.add_argument('-m', '--max-dim', type=int, default=2048,
+                        help='Maximum dimension of output image')
     args = parser.parse_args()
 
     # Get a runconfig dict from command line argumens
@@ -280,4 +282,4 @@ if __name__ == "__main__":
     # Run geocode burst workflow
     make_browse_image(args.out_fname, output_hdf5, bursts,
                       args.complex_to_real,  args.percent_low, args.percent_up,
-                      args.gamma, args.equalize)
+                      args.gamma, args.equalize, args.max_dim)
