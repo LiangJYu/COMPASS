@@ -41,7 +41,7 @@ def run(cfg: GeoRunConfig):
     info_channel.log(f"Starting {module_name} burst")
 
     # Start tracking processing time
-    t_start = time.time()
+    t_start = time.perf_counter()
 
     # Common initializations
     image_grid_doppler = isce3.core.LUT2d()
@@ -122,6 +122,7 @@ def run(cfg: GeoRunConfig):
             grid_path = f'{root_path}/CSLC/grids'
             grid_group = geo_burst_h5.require_group(grid_path)
             check_eap = is_eap_correction_necessary(burst.ipf_version)
+            dt_geocoding = timedelta(seconds=0.0)
             for b in bursts:
                 pol = b.polarization
 
@@ -154,6 +155,7 @@ def run(cfg: GeoRunConfig):
                                                    update=True)
 
                 # Geocode
+                t_geocoding = time.perf_counter()
                 isce3.geocode.geocode_slc(geo_burst_raster, rdr_burst_raster,
                                           dem_raster,
                                           radar_grid, sliced_radar_grid,
@@ -164,6 +166,7 @@ def run(cfg: GeoRunConfig):
                                           azimuth_carrier=az_carrier_poly2d,
                                           az_time_correction=az_lut,
                                           srange_correction=rg_lut)
+                dt_geocoding += timedelta(seconds=time.perf_counter() - t_geocoding)
 
             # Set geo transformation
             geotransform = [geo_grid.start_x, geo_grid.spacing_x, 0,
@@ -224,7 +227,9 @@ def run(cfg: GeoRunConfig):
                                                        burst,
                                                        cfg)
 
-    dt = str(timedelta(seconds=time.time() - t_start)).split(".")[0]
+    dt_geocode_str = str(dt_geocoding).split(".")[0]
+    info_channel.log(f"{module_name} geocoding time {dt_geocode_str} (hr:min:sec)")
+    dt = str(timedelta(seconds=time.perf_counter() - t_start)).split(".")[0]
     info_channel.log(f"{module_name} burst successfully ran in {dt} (hr:min:sec)")
 
 
