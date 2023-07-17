@@ -117,7 +117,12 @@ def run(cfg, burst=None, save_in_scratch=False):
                        rdr2geo_cfg.compute_local_incidence_angle,
                        gdal.GDT_Float32),
                        'heading': (
-                       rdr2geo_cfg.compute_azimuth_angle, gdal.GDT_Float32)}
+                       rdr2geo_cfg.compute_azimuth_angle, gdal.GDT_Float32),
+                       'east': (rdr2geo_cfg.compute_ground_to_sat_east,
+                                gdal.GDT_Float32),
+                       'north': (rdr2geo_cfg.compute_ground_to_sat_north,
+                                gdal.GDT_Float32),
+                       }
         raster_list = [
             isce3.io.Raster(f'{output_path}/{fname}.rdr', rdr_grid.width,
                             rdr_grid.length, 1, dtype, 'ENVI')
@@ -126,7 +131,7 @@ def run(cfg, burst=None, save_in_scratch=False):
 
         x_raster, y_raster, z_raster, layover_shadow_raster, \
         incident_angle_raster, local_incident_angle_raster, \
-        azimuth_angle_raster = raster_list
+        azimuth_angle_raster, east_raster, north_raster  = raster_list
 
         # run rdr2geo
         rdr2geo_obj.topo(dem_raster, x_raster=x_raster, y_raster=y_raster,

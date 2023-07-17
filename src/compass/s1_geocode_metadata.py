@@ -129,6 +129,7 @@ def run(cfg, burst, fetch_from_scratch=False):
     # Dict containing which layers to geocode and their respective file names
     # key: dataset name
     # value: (bool flag if dataset is to written, raster layer name)
+    # TODO add description to layer, currently using insufficient layer name as description
     static_layers = \
         {'x': (cfg.rdr2geo_params.compute_longitude, 'x'),
          'y': (cfg.rdr2geo_params.compute_latitude, 'y'),
@@ -137,8 +138,10 @@ def run(cfg, burst, fetch_from_scratch=False):
                              'incidence'),
          'local_incidence_angle': (cfg.rdr2geo_params.compute_local_incidence_angle,
                                    'local_incidence'),
-         'heading_angle': (cfg.rdr2geo_params.compute_azimuth_angle,
-                           'heading'),
+         'east': (cfg.rdr2geo_params.compute_ground_to_sat_east,
+                           'ground_to_sat_east'),
+         'north': (cfg.rdr2geo_params.compute_ground_to_sat_north,
+                           'ground_to_sat_north'),
          'layover_shadow_mask': (cfg.rdr2geo_params.compute_layover_shadow_mask,
                                  'layover_shadow_mask')
          }

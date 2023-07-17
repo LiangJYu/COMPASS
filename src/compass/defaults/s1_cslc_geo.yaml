@@ -46,7 +46,6 @@ runconfig:
           polarization: co-pol
           geocoding:
               flatten: True
-              lines_per_block: 1000
               x_posting:
               y_posting:
               x_snap:
@@ -90,11 +89,15 @@ runconfig:
               # Enable/disable layover shadow mask output
               compute_layover_shadow_mask: True
               # Enable/disable incidence angle output
-              compute_incidence_angle: True
+              compute_incidence_angle: False
               # Enable/disable local incidence output
               compute_local_incidence_angle: True
               # Enable/disable azimuth angle output
-              compute_azimuth_angle: True
+              compute_azimuth_angle: False
+              # Enable/disable LOS ground to satellite east vector output
+              compute_ground_to_sat_east: True
+              # Enable/disable LOS ground to satellite north vector output
+              geocode_metadata_layers: True
               # Enable/disable generation of the topo layers
               geocode_metadata_layers: True
 
