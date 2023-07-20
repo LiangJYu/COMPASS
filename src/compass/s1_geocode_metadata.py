@@ -139,10 +139,8 @@ def run(cfg, burst, fetch_from_scratch=False):
                              'incidence'),
          'local_incidence_angle': (cfg.rdr2geo_params.compute_local_incidence_angle,
                                    'local_incidence'),
-         'east': (cfg.rdr2geo_params.compute_ground_to_sat_east,
-                           'ground_to_sat_east'),
-         'north': (cfg.rdr2geo_params.compute_ground_to_sat_north,
-                           'ground_to_sat_north'),
+         'east': (cfg.rdr2geo_params.compute_ground_to_sat_east, 'east'),
+         'north': (cfg.rdr2geo_params.compute_ground_to_sat_north, 'north'),
          'layover_shadow_mask': (cfg.rdr2geo_params.compute_layover_shadow_mask,
                                  'layover_shadow_mask')
          }

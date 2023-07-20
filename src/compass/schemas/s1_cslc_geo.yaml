@@ -129,11 +129,11 @@ rdr2geo_options:
     compute_local_incidence_angle: bool(required=False)
     # Enable/disable azimuth angle output
     compute_azimuth_angle: bool(required=False)
-    # Enable/disable geocoding of the topo layers
-    compute_local_incidence_angle: bool(required=False)
     # Enable/disable LOS ground to satellite east vector output
     compute_ground_to_sat_east: bool(required=False)
     # Enable/disable LOS ground to satellite north vector output
+    compute_ground_to_sat_north: bool(required=False)
+    # Enable/disable geocoding of the topo layers
     geocode_metadata_layers: bool(required=False)
 
 worker_options:

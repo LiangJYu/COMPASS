@@ -97,8 +97,8 @@ runconfig:
               # Enable/disable LOS ground to satellite east vector output
               compute_ground_to_sat_east: True
               # Enable/disable LOS ground to satellite north vector output
-              geocode_metadata_layers: True
-              # Enable/disable generation of the topo layers
+              compute_ground_to_sat_north: True
+              # Enable/disable geocoding of the topo layers
               geocode_metadata_layers: True
 
       worker:

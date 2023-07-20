@@ -138,7 +138,9 @@ def run(cfg, burst=None, save_in_scratch=False):
                          incidence_angle_raster=incident_angle_raster,
                          local_incidence_angle_raster=local_incident_angle_raster,
                          heading_angle_raster=azimuth_angle_raster,
-                         layover_shadow_raster=layover_shadow_raster)
+                         layover_shadow_raster=layover_shadow_raster,
+                         ground_to_sat_east_raster=east_raster,
+                         ground_to_sat_north_raster=north_raster)
 
         # remove undesired/None rasters from raster list
         raster_list = [raster for raster in raster_list if raster is not None]
