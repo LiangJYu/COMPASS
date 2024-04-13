@@ -290,10 +290,12 @@ def solid_earth_tides(burst, lat_radar_grid, lon_radar_grid, hgt_radar_grid,
         Latitude array on burst radargrid
     lon_radar_grid: np.ndarray
         Longitude array on burst radargrid
-    inc_angle: np.ndarray
-        Incident angle raster in unit of degrees
-    head_angle: np.ndaaray
-        Heading angle raster in unit of degrees
+    hgt_radar_grid: np.ndarray
+        Height array on burst radargrid
+    ellipsoid: isce3.core.Ellipsoid
+        Ellipsoid defined by DEM
+    geo2rdr_params: isce3.geometry.Geo2RdrParams
+        Threshold, maximum iterations, and delta range to run geo2rdr with
 
     Returns
     ------
